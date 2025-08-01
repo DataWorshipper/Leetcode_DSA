@@ -13,11 +13,12 @@ public:
 
         
         int c=0;
-        for(int i=0;i<k;i++)
+        k--;
+        for(int i=0;i<=k;i++)
         {
             c+=reward1[diff[i].second];
         }
-        for(int i=k;i<reward1.size();i++)
+        for(int i=k+1;i<reward1.size();i++)
         {
             c+=reward2[diff[i].second];
         }
