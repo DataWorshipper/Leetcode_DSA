@@ -37,7 +37,7 @@ int r=0;
                    
 
                 }
-                 if(diff1>=k&&diff2>=k)
+                 if(diff1==k&&diff2==k)
                     return true;
                  l++;
                 
