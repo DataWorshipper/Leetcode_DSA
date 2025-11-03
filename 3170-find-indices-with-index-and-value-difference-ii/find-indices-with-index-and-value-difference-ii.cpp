@@ -23,11 +23,12 @@ if (it != s.end()) {
     
     return {j, it->second};
 }
-auto it2 = s.lower_bound({x - b, INT_MAX});
+auto it2 = s.upper_bound({x - b, INT_MAX});
 if (it2 != s.begin()) {
-    --it2; 
+    --it2;   
     return {j, it2->second};
 }
+
 s.erase({nums[i], i});
 ++i;
 ++j;
