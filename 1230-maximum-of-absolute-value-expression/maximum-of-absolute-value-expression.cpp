@@ -7,8 +7,8 @@ public:
         for (int i = 0; i < n; i++) {
             f1[i] = arr1[i] + arr2[i] + i;
             f2[i] = arr1[i] - arr2[i] + i;
-            f3[i] = -arr1[i] + arr2[i] + i;
-            f4[i] = -arr1[i] - arr2[i] + i;
+            f3[i] = arr1[i] -arr2[i] - i;
+            f4[i] = arr1[i] + arr2[i] - i;
         }
 
         auto getMaxDiff = [&](vector<int>& f) {
