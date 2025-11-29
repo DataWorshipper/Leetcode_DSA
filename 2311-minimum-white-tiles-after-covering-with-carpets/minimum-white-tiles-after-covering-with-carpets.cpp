@@ -11,7 +11,7 @@ int f(int index,int carpets,int len,string &floor)
 
     if(carpets<0)
     {
-        return INT_MAX/4;
+        return INT_MAX;
     }
     if(dp[index][carpets]!=-1)
     return dp[index][carpets];
