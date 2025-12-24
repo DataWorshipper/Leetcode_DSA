@@ -19,6 +19,8 @@ class Solution {
                 {ans=true;
                 break;
                 }
+                else
+                ans=false;
                 
                 
             }
