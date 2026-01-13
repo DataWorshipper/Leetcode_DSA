@@ -11,7 +11,7 @@ public:
             high=max(high,y+(double)squares[i][2]);
         }
     double ans=0;
-    double eps=1e-6;
+    double eps=1e-5;
         while(high-low>=eps)
         {
             double mid=(low)+(high-low)/2.0;
