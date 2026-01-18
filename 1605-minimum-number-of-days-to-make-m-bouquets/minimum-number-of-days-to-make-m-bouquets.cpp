@@ -1,3 +1,5 @@
+static const auto fast = [](){ ios::sync_with_stdio(false); cin.tie(nullptr); return 0; }();
+
 class Solution {
 public:
     int minDays(vector<int>& a, int m, int k) {
