@@ -11,7 +11,7 @@ ll f(ll ops,ll mask,vector<int>& nums,int n)
 
     if(dp[ops][mask]!=-1)
     return dp[ops][mask];
-ll ans=0;
+ll ans=LLONG_MIN;
     for(int i=0;i<2*n;i++)
     {
         for(int j=i+1;j<2*n;j++)
