@@ -1,34 +1,50 @@
+typedef long long ll;
+const int MOD=1e9+7;
 class Solution {
 public:
-const int MOD=1e9+7;
-int dp[2001][52][52];
-int f(int index,int prev1,int prev2,vector<int>& nums)
+ll dp[2001][1002];
+ll pref[2001][1002];
+bool vis[2001][1002];
+ll getpref(ll index,ll x,vector<int>& nums)
 {
-    if(index==nums.size())
+    if(x<0)
+    return 0;
+      if(vis[index][x])
+        return pref[index][x];
+
+       vis[index][x] = true;
+       pref[index][x]=getpref(index,x-1,nums)+f(index,x,nums);
+       return pref[index][x];
+}
+ll f(ll index,ll prev1,vector<int>& nums)
+{
+    ll n=nums.size();
+    if(index>=n)
     {
         return 1;
     }
-
-    if(dp[index][prev1][prev2]!=-1)
-    return dp[index][prev1][prev2];
-    int ans=0;
-    for(int i=0;i<=nums[index];i++)
+    if(dp[index][prev1+1]!=-1)
+    return dp[index][prev1+1];
+    ll ans=0;
+    if(prev1==-1)
     {
-        int d1=i;
-        int d2=nums[index]-i;
-        if(d1>=prev1 &&d2<=prev2)
-        {
-            ans=(ans+f(index+1,d1,d2,nums))%MOD;
-        }
+        ans=getpref(index+1,nums[0],nums);
+    }
+    else
+    {
+
+       int limit=min(prev1,nums[index]-nums[index-1]+prev1);
+       limit=min(limit,nums[index]);
+       if(limit>=0)
+       ans=getpref(index+1,limit,nums);
     }
 
-    return dp[index][prev1][prev2]=ans%MOD;
+    return dp[index][prev1+1]=ans%MOD;
 }
     int countOfPairs(vector<int>& nums) {
-        
         memset(dp,-1,sizeof(dp));
-        return f(0,0,51,nums);
-
-
+         memset(vis,false,sizeof(vis));
+           memset(pref,0,sizeof(pref));
+        return f(0,-1,nums);
     }
 };
