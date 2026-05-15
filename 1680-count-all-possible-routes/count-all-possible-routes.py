@@ -6,6 +6,8 @@ class Solution:
         MOD=10**9+7
         def f(i:int,fuel_left:int,start:int,finish:int,locations:List[int])->int:
             ans = 1 if i == finish else 0
+            if fuel_left<=0 and i!=finish:
+                return 0
             
             if dp[i][fuel_left]!=-1:
                 return dp[i][fuel_left]
