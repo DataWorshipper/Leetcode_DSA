@@ -4,13 +4,7 @@ class Solution:
         m=len(grid)
         n=len(grid[0])
 
-        INF=float('inf')
-
-        dist=[[INF]*n for _ in range(m)]
-
         q=deque()
-
-        dist[0][0]=0
 
         q.append((0,0,0,0))
 
@@ -43,9 +37,7 @@ class Solution:
 
                         state=(new_x,new_y,obstacle)
 
-                        if d+1<dist[new_x][new_y] or state not in vis:
-
-                            dist[new_x][new_y]=d+1
+                        if state not in vis:
 
                             vis.add(state)
 
@@ -55,9 +47,7 @@ class Solution:
 
                         state=(new_x,new_y,obstacle+1)
 
-                        if obstacle+1<=k and (d+1<dist[new_x][new_y] or state not in vis):
-
-                            dist[new_x][new_y]=d+1
+                        if obstacle+1<=k and state not in vis:
 
                             vis.add(state)
 
