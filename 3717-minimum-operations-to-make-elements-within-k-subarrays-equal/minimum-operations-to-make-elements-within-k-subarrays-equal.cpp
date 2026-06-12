@@ -104,26 +104,20 @@ public:
             {
                 dp[i][l]=dp[i-1][l];
                     if(i >= x-1)
-{
-    ll start = i-x+1;
-
-    if(start == 0)
-    {
-        if(l == 1)
-            dp[i][l] = min(dp[i][l], dp[0][0]+cost[0]);
-    }
-    else
-    {
-        if(dp[start-1][l-1] != POS)
-        {
-            dp[i][l] = min(dp[i][l],
-                           dp[start-1][l-1] + cost[start]);
-        }
-    }
-}
-
+            {
+                ll start = i-x+1;
+                if(start==0)
+                {   
+                    dp[i][l]=min(dp[i][l],dp[0][l-1]+cost[0]);
+                }
+                 else if(dp[start-1][l-1]!=POS)
+                dp[i][l]=min(dp[i][l],dp[start-1][l-1]+cost[start]);
+            }
             }
         }
+
+    
+
 
 
 return dp[n-1][k];
