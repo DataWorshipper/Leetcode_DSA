@@ -22,7 +22,7 @@ public:
                 right.insert(nums[r]);
                 s_r+=nums[r];
             }
-            while(left.size()>right.size()+1)
+            if(left.size()>right.size()+1)
             {
                 ll val=*left.rbegin();
                 left.erase(prev(left.end()));
@@ -30,7 +30,7 @@ public:
                 s_l-=val;
                 s_r+=val;
             }
-             while(right.size()>left.size())
+             if(right.size()>left.size())
             {
                 ll val=*right.begin();
                 right.erase(right.begin());
@@ -53,7 +53,7 @@ public:
                 }
 
 
-              while(left.size()>right.size()+1)
+              if(left.size()>right.size()+1)
             {
                 ll val=*left.rbegin();
                 left.erase(prev(left.end()));
@@ -61,7 +61,7 @@ public:
                 s_l-=val;
                 s_r+=val;
             }
-             while(right.size()>left.size())
+             if(right.size()>left.size())
             {
                 ll val=*right.begin();
                 right.erase(right.begin());
@@ -110,7 +110,7 @@ public:
     if(start == 0)
     {
         if(l == 1)
-            dp[i][l] = min(dp[i][l], cost[0]);
+            dp[i][l] = min(dp[i][l], dp[0][0]+cost[0]);
     }
     else
     {
