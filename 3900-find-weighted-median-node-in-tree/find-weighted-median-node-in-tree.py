@@ -71,7 +71,7 @@ class Solution:
             need = (distance + 1) // 2
             if need==ulca:
                 ans.append(L)
-            elif need <=ulca:
+            elif need <ulca:
                 rem = need
                 curr=u
                 for i in range(LOG - 1, -1, -1):
