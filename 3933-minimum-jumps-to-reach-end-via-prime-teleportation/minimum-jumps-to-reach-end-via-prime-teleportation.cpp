@@ -32,9 +32,11 @@ public:
             while (x > 1) {
                 int p = spf[x];
                 mp[p].push_back(i);
-
-                while (x % p == 0)
-                    x /= p;
+                while(x%p==0)
+                {
+                    x/=p;
+                }
+                
             }
         }
 
