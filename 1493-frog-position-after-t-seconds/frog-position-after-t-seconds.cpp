@@ -30,7 +30,7 @@ public:
 
             if (node == target) {
                 if (t == time) return p;
-                else if (time > t) return 0;
+                else if (time > t) continue;
 
                 int friends = 0;
                 for (auto& it : adj[node]) {
