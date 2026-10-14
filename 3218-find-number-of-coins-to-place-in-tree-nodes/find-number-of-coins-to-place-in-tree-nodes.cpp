@@ -1,81 +1,110 @@
-
-typedef long long ll;
+#define ll long long
+#define v vector
 class Solution {
 public:
-    vector<int>subtree;
-    vector<ll>ans;
-    vector<vector<int>>mx,mn;
-    
-    void dfs(int node,int parent,  vector<vector<int>>&adj, vector<int>& cost)
+v<ll>ans;
+v<priority_queue<ll,v<ll>,greater<ll>>>mx;
+v<priority_queue<ll>>mn;
+v<ll>subtree;
+void dfs(ll node,ll parent,v<v<ll>>&adj, vector<int>&cost)
+{   
+    subtree[node]=1;
+    mn[node].push(cost[node]);
+    mx[node].push(cost[node]);
+    for(auto it:adj[node])
     {
-        subtree[node]=1;
-        mx[node]={cost[node]};
-        mn[node]={cost[node]};
+        if(it==parent)
+        continue;
+        dfs(it,node,adj,cost);
+        subtree[node]+=subtree[it];
 
-        for(auto child:adj[node])
+        if(mx[node].size()<mx[it].size())
         {
-            if(child==parent)
-            continue;
-            dfs(child,node,adj,cost);
-            subtree[node]+=subtree[child];
-
-            for(auto it:mx[child])
-            {
-                mx[node].push_back(it);
-            }
-              for(auto it:mn[child])
-            {
-                mn[node].push_back(it);
-            }
-
+            swap(mx[node],mx[it]);
         }
+        while(mx[it].size()>0)
+        {
+            ll val=mx[it].top();
+          
+            mx[node].push(val);
+            if(mx[node].size()>3)
+            mx[node].pop();
 
-        sort(mx[node].begin(),mx[node].end(),greater<>());
-        sort(mn[node].begin(),mn[node].end());
-         if (mx[node].size() > 3) mx[node].resize(3);
-          if (mn[node].size() > 3) mn[node].resize(3);
-  vector<ll> vals;
-        for (auto x : mx[node]) vals.push_back(x);
-        for (auto x : mn[node]) vals.push_back(x);
-       ll best = LLONG_MIN;
+            mx[it].pop();
+        }
+        if(mn[node].size()<mn[it].size())
+        {
+            swap(mn[node],mn[it]);
+        }
+        while(mn[it].size()>0)
+        {
+            ll val=mn[it].top();
+          
+            mn[node].push(val);
+            if(mn[node].size()>3)
+            mn[node].pop();
 
-if (mx[node].size() >= 3) {
-    best = max(best, 1LL * mx[node][0] * mx[node][1] * mx[node][2]);
-}
-
-if (mn[node].size() >= 2 && mx[node].size() >= 1) {
-    best = max(best, 1LL * mn[node][0] * mn[node][1] * mx[node][0]);
-}
-
-if (subtree[node] < 3) {
-    ans[node] = 1;
-} else {
-    ans[node] = max(0LL, best);
-}
+              mn[it].pop();
+        }
 
     }
-  
-    vector<long long> placedCoins(vector<vector<int>>& edges, vector<int>& cost) {
 
-        int a=edges.size();
-        int n=a+1;
-        vector<vector<int>>adj(n);
+    if(subtree[node]<3)
+    {
+        ans[node]=1;
+    }else
+    {
+    v<ll>a;
+    v<ll>b;
+    auto tempMn = mn[node];
+auto tempMx = mx[node];
+    while(tempMn.size()>0)
+    {
+        a.push_back(tempMn.top());
+        tempMn.pop();
+    }   
+
+     while(tempMx.size()>0)
+    {
+        b.push_back(tempMx.top());
+        tempMx.pop();
+    }
+    sort(a.begin(),a.end());
+    sort(b.begin(),b.end());
+    ll max_cost=LLONG_MIN;
+    if(b.size()==3)
+    {
+        max_cost=max(max_cost,b[0]*b[1]*b[2]);
+    }
+    if(a.size()>=2 and b.size()>0)
+    {
+        max_cost=max(max_cost,a[0]*a[1]*b.back());
+    }
+    if(max_cost<0)
+    ans[node]=0;
+    else
+    ans[node]=max_cost;
+
+    }
+
+}
+    vector<long long> placedCoins(vector<vector<int>>& edges, vector<int>& cost) {
+       
+        ll n=edges.size()+1;
+        v<v<ll>>adj(n);
         for(auto it:edges)
         {
-            int u=it[0];
-            int v=it[1];
-            adj[u].push_back(v);
-            adj[v].push_back(u);
+            adj[it[0]].push_back(it[1]);
+            adj[it[1]].push_back(it[0]);
         }
+
+        ans.resize(n,0);
+        subtree.resize(n,0);
+        mn.resize(n);
+        mx.resize(n);
+        dfs(0,-1,adj,cost);
+        return ans;
+
         
-        subtree.assign(n,0);
-        ans.assign(n,0);
-         mx.assign(n, {});
-        mn.assign(n, {});
-
-    dfs(0,-1,adj,cost);
-    return ans;
-
-
     }
 };
