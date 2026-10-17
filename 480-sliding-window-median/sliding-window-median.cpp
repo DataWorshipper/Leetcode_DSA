@@ -1,83 +1,84 @@
 class Solution {
 public:
     vector<double> medianSlidingWindow(vector<int>& nums, int k) {
-        multiset<int>left,right;
-        vector<double>ans;
-
-        int r=0;
+        multiset<double>left,right;
         int l=0;
+        int r=0;
         int n=nums.size();
+        vector<double>ans;
         while(r<n)
         {
-            if(left.empty()||nums[r]<=*left.rbegin())
+            if(left.empty()||nums[r]<*left.rbegin())
             {
                 left.insert(nums[r]);
             }
             else
-            right.insert(nums[r]);
-
+            {
+                right.insert(nums[r]);
+            }
             if(left.size()>right.size()+1)
             {
-                right.insert(*left.rbegin());
+                int val=*left.rbegin();
                 left.erase(prev(left.end()));
+                right.insert(val);
+
             }
             else if(right.size()>left.size()+1)
             {
-                left.insert(*right.begin());
+                int val=*right.begin();
                 right.erase(right.begin());
-
+                left.insert(val);
             }
-  if(r-l+1>k)
+            if(r-l+1>k)
             {
-
-                int remove=nums[l];
-    auto it = left.find(nums[l]);
-if (it != left.end()) {
-    left.erase(it);
-} else {
-    right.erase(right.find(nums[l])); 
-}
-
-
-               
-               
-               
-
-
-                     if(left.size()>right.size()+1)
-            {
-                right.insert(*left.rbegin());
-                left.erase(prev(left.end()));
-            }
-            else if(right.size()>left.size()+1)
-            {
-                left.insert(*right.begin());
-                right.erase(right.begin());
-
-            }
-                l++;
-
-
-            }
-           if(r-l+1==k)
-            {   if(left.size()==right.size())
-            {
-                int a1=*left.rbegin();
-                int b1=*right.begin();
-                double med=(((long long)a1+(long long)b1))/2.0;
-                ans.push_back(med);}
-                else if(left.size()>right.size())
+                int val=nums[l];
+                auto idx=left.find(val);
+                if(idx!=left.end())
                 {
-                    ans.push_back(*left.rbegin());
+                    left.erase(left.find(val));
                 }
                 else
-                ans.push_back(*right.begin());
-            }
-          
+                {
+                    right.erase(right.find(val));
+                }
+                if(left.size()>right.size()+1)
+            {
+                int val=*left.rbegin();
+                left.erase(prev(left.end()));
+                right.insert(val);
 
+            }
+            else if(right.size()>left.size()+1)
+            {
+                int val=*right.begin();
+                right.erase(right.begin());
+                left.insert(val);
+            }
+                l++;
+            }
+            if(r-l+1==k)
+            {
+                if(k%2==1)
+                {
+                    if(left.size()>right.size())
+                    {
+                        ans.push_back(*left.rbegin());
+                    }
+                    else
+                    ans.push_back(*right.begin());
+                }
+                else
+                {
+                    double a=*left.rbegin();
+                    double b=*right.begin();
+                    double val=(a+b)/2;
+                    ans.push_back(val);
+                }
+            }
             r++;
         }
-
         return ans;
+
+
     }
 };
